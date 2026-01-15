@@ -1,0 +1,16 @@
+{% extends "todo/base.html" %}
+{% load todo_filters %}
+{% block content %}
+    <div class="bg-white rounded-xl shadow-lg p-6">
+        <!-- Form Partial -->
+        {% include "todo/partials/todo_form.html" %}
+
+        <!-- Todo List Partial -->
+        {% include "todo/partials/todo_list.html" %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="mt-8 text-center text-gray-600 text-sm">
+        <p>✨ <strong>HTMX Tips:</strong> Click circle to toggle • Hover to delete • No page reloads!</p>
+    </div>
+{% endblock %}

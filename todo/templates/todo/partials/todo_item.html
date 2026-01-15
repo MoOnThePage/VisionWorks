@@ -1,0 +1,43 @@
+<div
+    id="todo-{{ todo.id }}"
+    class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-200 flex items-center justify-between group"
+>
+    <div class="flex items-center space-x-3 flex-1">
+        <!-- Toggle Completion -->
+        <button
+            hx-post="{% url 'toggle_todo' todo.id %}"
+            hx-target="#todo-{{ todo.id }}"
+            hx-swap="outerHTML"
+            class="focus:outline-none"
+            aria-label="Toggle completion"
+        >
+            {% if todo.completed %}
+                <span class="text-green-500 text-xl">✅</span>
+            {% else %}
+                <span class="text-gray-300 text-xl hover:text-gray-400">⚪</span>
+            {% endif %}
+        </button>
+
+        <!-- Todo Text -->
+        <span class="{% if todo.completed %}completed{% endif %} text-lg">
+            {{ todo.title }}
+        </span>
+
+        <!-- Created Time -->
+        <span class="text-xs text-gray-400 ml-auto">
+            {{ todo.created_at|date:"M d, H:i" }}
+        </span>
+    </div>
+
+    <!-- Delete Button -->
+    <button
+        hx-delete="{% url 'delete_todo' todo.id %}"
+        hx-target="#todo-{{ todo.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Are you sure you want to delete this task?"
+        class="text-red-400 hover:text-red-600 ml-4 opacity-0 group-hover:opacity-100 transition duration-200"
+        aria-label="Delete task"
+    >
+        🗑️
+    </button>
+</div>

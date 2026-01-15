@@ -1,0 +1,18 @@
+{% load todo_filters %}
+
+<div id="todo-list" class="space-y-3">
+    {% for todo in todos %}
+        {% include "todo/partials/todo_item.html" with todo=todo %}
+    {% empty %}
+        <div class="text-center py-8 text-gray-500">
+            <p class="text-lg">🎉 No tasks yet! Add one above.</p>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Stats - SIMPLIFIED VERSION -->
+<div class="mt-6 pt-6 border-t border-gray-200 text-sm text-gray-600">
+    <span id="todo-count">{{ todos.count }}</span> task{{ todos.count|pluralize }} total
+    <span class="mx-2">•</span>
+    <span id="completed-count">{{ todos|completed_count }}</span> completed
+</div>

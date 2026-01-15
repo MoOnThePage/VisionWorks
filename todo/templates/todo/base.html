@@ -1,0 +1,47 @@
+{% load django_htmx %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [hx-target="closest div"] {
+            cursor: pointer;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Todo List
+        </h1>
+        {% block content %}{% endblock %}
+    </div>
+
+    <!--    Htmx Script -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    {% django_htmx_script %}
+    <script>
+        // Add a little flair to HTMX requests
+        document.body.addEventListener('htmx:beforeRequest', function(evt) {
+            const target = evt.target;
+            if (target.hasAttribute('hx-indicator')) {
+                target.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            const target = evt.target;
+            if (target.hasAttribute('hx-indicator')) {
+                target.removeAttribute('disabled');
+            }
+        });
+    </script>
+</body>
+</html>
